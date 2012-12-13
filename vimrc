@@ -60,7 +60,7 @@ let g:vimclojure#HighlightBuiltins = 1
 let g:vimclojure#ParenRainbow = 1
 "let g:lisp_rainbow=1
 set timeoutlen=4000
-set guifont=Inconsolata:h16
+set guifont=Inconsolata:h14
 
 " Fugitive
         nnoremap <silent> <leader>gs :Gstatus<CR>
