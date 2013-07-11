@@ -43,5 +43,5 @@ PATH=$PATH:~/bin:~/dev/git/emscripten
 PATH=$PATH:/usr/local/lib/node_modules
 export NODE_PATH=/usr/local/lib/node_modules/
 export PATH
-export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+export JAVA_HOME=$(/usr/libexec/java_home)
 
