@@ -34,11 +34,12 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=/usr/local/Cellar/llvm/3.1/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:$HOME/bin
+export PATH=/usr/local/bin:/usr/local/Cellar/llvm/3.1/bin:/usr/local/Cellar/python/2.7.3/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:$HOME/bin
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-PATH=$PATH:~/bin
+PATH=$PATH:~/bin:~/dev/git/emscripten
+
 PATH=$PATH:/usr/local/lib/node_modules
 export NODE_PATH=/usr/local/lib/node_modules/
 export PATH

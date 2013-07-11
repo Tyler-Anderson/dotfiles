@@ -1,4 +1,6 @@
 startup_message off
+shell -${SHELL}
+
 
 # if we accidentally hangup, don't be all attached when we come back. 
 autodetach on
