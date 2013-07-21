@@ -44,4 +44,5 @@ PATH=$PATH:/usr/local/lib/node_modules
 export NODE_PATH=/usr/local/lib/node_modules/
 export PATH
 export JAVA_HOME=$(/usr/libexec/java_home)
-
+export LEIN_REPL_PORT=$(( $RANDOM % 10000 + 10000 ))
+export LEIN_REPL_HOST=10.0.0.2
