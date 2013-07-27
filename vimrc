@@ -1,5 +1,5 @@
 set nocompatible        " must be first line
-set shell=/bin/bash
+set shell=/bin/zsh
 set background=dark     " Assume a dark background
 filetype off                   " required!
 set history=1000                
@@ -11,7 +11,6 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 " My Bundles
 source ~/dotfiles/vim.bundles
-
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -19,29 +18,13 @@ set expandtab
 let mapleader = ","
 
 "slimux mappings
-map <Leader>s :SlimuxREPLSendLine<CR>
-vmap <Leader>s :SlimuxREPLSendSelection<CR>
-map <Leader>a :SlimuxShellLast<CR>
-map <Leader>k :SlimuxSendKeysLast<CR>
+"map <Leader>s :SlimuxREPLSendLine<CR>
+"vmap <Leader>s :SlimuxREPLSendSelection<CR>
+"map <Leader>a :SlimuxShellLast<CR>
+"map <Leader>k :SlimuxSendKeysLast<CR>
 
 "UndotreeToggle
 map <Leader>u :UndotreeToggle<CR>
-
-" old neocompletecache
-"
-        "let g:neocomplcache_enable_at_startup = 1
-        " <CR>: close popup and save indent. 
-        "inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>" 
-        " <TAB>: completion. 
-        "inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>" 
-        " <C-h>, <BS>: close popup and delete backword char. 
-        "inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>" 
-        "inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>" 
-        "inoremap <expr><C-y>  neocomplcache#close_popup() 
-        "inoremap <expr><C-e>  neocomplcache#cancel_popup() 
-
-" yank to end of line
-nnoremap Y y$
 
 """ Code folding options
 nmap <leader>f0 :set foldlevel=0<CR>
@@ -57,9 +40,6 @@ nmap <leader>f9 :set foldlevel=9<CR>
 syntax on
 filetype plugin indent on
 let mapleader = ","
-let g:vimclojure#HighlightBuiltins = 1
-let g:vimclojure#ParenRainbow = 1
-"let g:lisp_rainbow=1
 
 set timeoutlen=4000
 set guifont=Inconsolata:h14
@@ -72,86 +52,103 @@ set guifont=Inconsolata:h14
         nnoremap <silent> <leader>gl :Glog<CR>
         nnoremap <silent> <leader>gp :Git push<CR>
 
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplcache.
+let g:neocomplcache_enable_at_startup = 1
+" Use smartcase.
+let g:neocomplcache_enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 
-" neocomplcache {
-    let g:acp_enableAtStartup = 0
-    let g:neocomplcache_enable_at_startup = 1
-    let g:neocomplcache_enable_camel_case_completion = 1
-    let g:neocomplcache_enable_smart_case = 1
-    let g:neocomplcache_enable_underbar_completion = 1
-    let g:neocomplcache_enable_auto_delimiter = 1
-    let g:neocomplcache_max_list = 15
-    let g:neocomplcache_force_overwrite_completefunc = 1
+" Enable heavy features.
+" Use camel case completion.
+"let g:neocomplcache_enable_camel_case_completion = 1
+" Use underbar completion.
+"let g:neocomplcache_enable_underbar_completion = 1
 
-    " SuperTab like snippets behavior.
-    imap <silent><expr><TAB> neosnippet#expandable() ?
-        \ "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ?
-        \ "\<C-e>" : "\<TAB>")
-    smap <TAB> <Right><Plug>(neosnippet_jump_or_expand)
-
-    " Define dictionary.
-    let g:neocomplcache_dictionary_filetype_lists = {
-        \ 'default' : '',
-        \ 'vimshell' : $HOME.'/.vimshell_hist',
-        \ 'scheme' : $HOME.'/.gosh_completions'
+" Define dictionary.
+let g:neocomplcache_dictionary_filetype_lists = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
         \ }
 
-    " Define keyword.
-    if !exists('g:neocomplcache_keyword_patterns')
-        let g:neocomplcache_keyword_patterns = {}
-    endif
-    let g:neocomplcache_keyword_patterns._ = '\h\w*'
+" Define keyword.
+if !exists('g:neocomplcache_keyword_patterns')
+    let g:neocomplcache_keyword_patterns = {}
+endif
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
-    " Plugin key-mappings.
-    imap <C-k> <Plug>(neosnippet_expand_or_jump)
-    smap <C-k> <Plug>(neosnippet_expand_or_jump)
-    inoremap <expr><C-g> neocomplcache#undo_completion()
-    inoremap <expr><C-l> neocomplcache#complete_common_string()
-    inoremap <expr><CR> neocomplcache#complete_common_string()
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplcache#undo_completion()
+inoremap <expr><C-l>     neocomplcache#complete_common_string()
 
-    " <TAB>: completion.
-    inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return neocomplcache#smart_close_popup() . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+endfunction
+" <TAB>: completion.
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplcache#close_popup()
+inoremap <expr><C-e>  neocomplcache#cancel_popup()
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
 
-    " <CR>: close popup
-    " <s-CR>: close popup and save indent.
-    inoremap <expr><s-CR> pumvisible() ? neocomplcache#close_popup()"\<CR>" : "\<CR>"
-    inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+" For cursor moving in insert mode(Not recommended)
+"inoremap <expr><Left>  neocomplcache#close_popup() . "\<Left>"
+"inoremap <expr><Right> neocomplcache#close_popup() . "\<Right>"
+"inoremap <expr><Up>    neocomplcache#close_popup() . "\<Up>"
+"inoremap <expr><Down>  neocomplcache#close_popup() . "\<Down>"
+" Or set this.
+"let g:neocomplcache_enable_cursor_hold_i = 1
+" Or set this.
+"let g:neocomplcache_enable_insert_char_pre = 1
 
-    " <C-h>, <BS>: close popup and delete backword char.
-    inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-    inoremap <expr><C-y> neocomplcache#close_popup()
+" AutoComplPop like behavior.
+"let g:neocomplcache_enable_auto_select = 1
 
-    " Enable omni completion.
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplcache_enable_auto_select = 1
+"let g:neocomplcache_disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
 
-    " Enable heavy omni completion.
-    if !exists('g:neocomplcache_omni_patterns')
-        let g:neocomplcache_omni_patterns = {}
-    endif
-    let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-    let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-    let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-    let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-    let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
-    " use honza's snippets
-    let g:neosnippet#snippets_directory='~/.vim/bundle/snipmate-snippets/snippets'
+" Enable heavy omni completion.
+if !exists('g:neocomplcache_omni_patterns')
+  let g:neocomplcache_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
-    " For snippet_complete marker.
-    if has('conceal')
-        set conceallevel=2 concealcursor=i
-    endif
- " }
-    
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'    
+:let $PATH .='PATH=/usr/local/bin:~/:~/.lein:/usr/local/Cellar/llvm/3.1/bin:/usr/local/Cellar/python/2.7.3/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:$HOME/bin'
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
 
-
-
+au InsertLeave * hi Cursor guibg=red
+au InsertEnter * hi Cursor guibg=white
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+auto
 
 try
     colorscheme Desert
@@ -162,3 +159,6 @@ endtry
 "absurd command to open a VSplit window with the current code scrolled a page
 "ahead
 :noremap <silent> <Leader>vs :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+let g:SuperTabDefaultCompletionType = "<c-n>"
+
