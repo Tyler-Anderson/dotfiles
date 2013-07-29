@@ -3,29 +3,33 @@ set shell=/bin/zsh
 set background=dark     " Assume a dark background
 filetype off                   " required!
 set history=1000                
-set rtp+=~/.vim/bundle/vundle/
 set number
-call vundle#rc()
- " let Vundle manage Vundle
- " required! 
-Bundle 'gmarik/vundle'
-" My Bundles
+ if has('vim_starting')
+   set runtimepath+=~/.vim/bundle/neobundle.vim/
+ endif
+
+ call neobundle#rc(expand('~/.vim/bundle/'))
+NeoBundleFetch 'Shougo/neobundle.vim'
+ 
 source ~/dotfiles/vim.bundles
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
 let mapleader = ","
-
+let g:ctrlp_map = '<C-p>'
 "slimux mappings
 "map <Leader>s :SlimuxREPLSendLine<CR>
 "vmap <Leader>s :SlimuxREPLSendSelection<CR>
 "map <Leader>a :SlimuxShellLast<CR>
 "map <Leader>k :SlimuxSendKeysLast<CR>
-
+let g:SuperTabNoCompleteAfter = ['^', ',', '\s']
 "UndotreeToggle
 map <Leader>u :UndotreeToggle<CR>
 
+"vim-static opts
+" Default
+let g:clojure_maxlines = 100
 """ Code folding options
 nmap <leader>f0 :set foldlevel=0<CR>
 nmap <leader>f1 :set foldlevel=1<CR>
@@ -59,7 +63,7 @@ let g:neocomplcache_enable_at_startup = 1
 " Use smartcase.
 let g:neocomplcache_enable_smart_case = 1
 " Set minimum syntax keyword length.
-let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_min_syntax_lengthneocomplcache_min_syntax_length = 3
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 
 " Enable heavy features.
@@ -94,6 +98,7 @@ function! s:my_cr_function()
   "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
 endfunction
 " <TAB>: completion.
+let g:SuperTabDefaultCompletionType = "<c-n>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
@@ -119,7 +124,6 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 "set completeopt+=longest
 "let g:neocomplcache_enable_auto_select = 1
 "let g:neocomplcache_disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -159,6 +163,4 @@ endtry
 "absurd command to open a VSplit window with the current code scrolled a page
 "ahead
 :noremap <silent> <Leader>vs :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-let g:SuperTabDefaultCompletionType = "<c-n>"
 
