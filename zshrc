@@ -29,21 +29,11 @@ ZSH_THEME="robbyrussell"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git, osx, vi-mode)
+plugins=(git)
 
-
-source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=/usr/local/bin:~/:~/.lein:/usr/local/Cellar/llvm/3.1/bin:/usr/local/Cellar/python/2.7.3/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:$HOME/bin
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
+export PATH=/usr/local/bin:~/:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:$HOME/bin
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-PATH=$PATH:~/bin:~/dev/git/emscripten
-
-PATH=$PATH:/usr/local/lib/node_modules
-export NODE_PATH=/usr/local/lib/node_modules/
-export PATH
-export JAVA_HOME=$(/usr/libexec/java_home)
-export LEIN_REPL_PORT=$(( $RANDOM % 10000 + 10000 ))
-export LEIN_REPL_HOST=10.0.0.2
+# export LEIN_REPL_PORT=$(( $RANDOM % 10000 + 10000 ))
+# export LEIN_REPL_HOST=10.0.0.2
