@@ -90,7 +90,7 @@ hilight Pmenu guibg=red guifg=white
 auto
 
 try
-    colorscheme Desert
+    colorscheme anderson
 catch
     colorscheme desert256
 endtry
@@ -115,4 +115,15 @@ autocmd FileType ocaml source /Users/Tyler/.opam/system/share/typerex/ocp-indent
 set backupdir=./.backup,.,/tmp
 set directory=.,./.backup,/tmp
 
+fun! JumpToDef()
+  if exists("*GotoDefinition_" . &filetype)
+    call GotoDefinition_{&filetype}()
+  else
+    exe "norm! \<C-]>"
+  endif
+endf
+
+" Jump to tag
+nn <M-g> :call JumpToDef()<cr>
+ino <M-g> <esc>:call JumpToDef()<cr>i
 

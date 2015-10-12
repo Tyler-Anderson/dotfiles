@@ -10,7 +10,28 @@
  ;; Paths must have a trailing slash (ie. `~/.mycontribs/')
  dotspacemacs-configuration-layer-path '()
  ;; List of configuration layers to load.
- dotspacemacs-configuration-layers '()
+ dotspacemacs-configuration-layers '(
+                                     haskell
+                                     ocaml
+                                     clojure
+                                     html
+                                     javascript
+                                     auto-completion
+                                     python
+                                     ruby
+                                     magit
+                                     elixir
+                                     fsharp
+                                     nim
+                                     yaml
+                                     scheme
+                                     racket
+                                     typescript
+                                     auto-completion
+                                     syntax-checking
+                                     django
+;;                                   myPackages
+                                     )
  ;; A list of packages and/or extensions that will not be install and loaded.
  dotspacemacs-excluded-packages '()
 )
@@ -27,10 +48,8 @@
  ;; List of themes, the first of the list is loaded when spacemacs starts.
  ;; Press <SPC> T n to cycle to the next theme in the list (works great
  ;; with 2 themes variants, one dark and one light)
- dotspacemacs-themes '(solarized-light
-                       solarized-dark
+ dotspacemacs-themes '(monokai                      solarized-dark
                        leuven
-                       monokai
                        zenburn)
  ;; Default font. The powerline-offset allows to quickly tweak the mode-line
  ;; size to make separators look not too crappy.
@@ -101,29 +120,46 @@ This function is called at the very end of Spacemacs initialization."
 (add-to-list 'load-path "~/.merlin/")
 (load "tuareg-site-file")
 (autoload 'fsharp-mode "fsharp-mode"  "Major mode for editing F# code." t)
+
+(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+(add-hook 'after-init-hook #'global-flycheck-mode)
+(add-hook 'after-init-hook (lambda
+                             (setq python-shell-interpreter "python")))
+(setq flycheck-disabled-checkers '())
+(setq-default flycheck-disabled-checkers
+              (append flycheck-disabled-checkers
+                      '(javascript-jshint)))
+
+(add-hook 'after-init-hook (lambda '(flycheck-add-mode 'javascript-eslint 'web-mode)))
+
+;; disable json-jsonlist checking for json files
+
 ;(add-to-list 'auto-mode-alist '("\\.fs[iylx]?$" . fsharp-mode))
 ;(push " ~/.emacs.d/venice/merlin/emacs" load-path) ; directory containing merlin.el
 
 (setq merlin-command "~/.merlin/ocamlmerlin")  ; needed only if ocamlmerlin not already in your PATH
 (autoload 'merlin-mode "merlin" "Merlin mode" t)
 (add-hook 'tuareg-mode-hook 'merlin-mode)
+(add-hook 'javascript-mode-hool 'auto-complete-mode)
 (push "~/venice" load-path)
 (push "~/venice/themes" load-path)
+
  (require 'desert-theme)
 
  (setenv "PATH" (concat "~/bin:" (getenv "PATH")))
  (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
  (setq exec-path (append exec-path '("/usr/local/bin")))
  (add-hook 'after-init-hook 'ycmd-setup)
-; (add-hook 'after-init-hook '(company-ycmd-setup))
+ (add-hook 'after-init-hook '(company-ycmd-setup))
  (set-variable 'ycmd-server-command '("python" "~/dev/misc/ycmd"))
-;(menu-bar-mode)
+(menu-bar-mode)
 
 (add-hook 'clojure-mode 'cider-mode)
 ;(add-hook 'after-init-hook 'global-company-mode)
 (add-hook 'javascript-mode 'js2-mode)
 (add-hook 'js2-mode 'ac-js2)
-
+(hl-line-mode -1)
+(global-hl-line-mode -1)
 ;; Do not write anything in this section. This is where Emacs will
 ;; auto-generate custom variable definitions.
 

@@ -34,6 +34,5 @@ plugins=(git)
 
 # Customize to your needs...
 export PATH=/usr/local/bin:~/:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:$HOME/bin
-
 # export LEIN_REPL_PORT=$(( $RANDOM % 10000 + 10000 ))
 # export LEIN_REPL_HOST=10.0.0.2
