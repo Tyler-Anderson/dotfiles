@@ -11,6 +11,8 @@
  dotspacemacs-configuration-layer-path '()
  ;; List of configuration layers to load.
  dotspacemacs-configuration-layers '(
+                                     osx
+                                     git
                                      haskell
                                      ocaml
                                      clojure
@@ -30,6 +32,14 @@
                                      auto-completion
                                      syntax-checking
                                      django
+                                     ycmd
+                                     smex
+                                     '(shell :variables
+                                             shell-default-position 'bottom
+                                             shell-default-height 30
+                                             shell-default-term-shell "/bin/zsh"
+                                             shell-enable-smart-eshell t
+                                             auto-completion-enable-help-tooltip t)
 ;;                                   myPackages
                                      )
  ;; A list of packages and/or extensions that will not be install and loaded.
@@ -128,7 +138,8 @@ This function is called at the very end of Spacemacs initialization."
 (setq flycheck-disabled-checkers '())
 (setq-default flycheck-disabled-checkers
               (append flycheck-disabled-checkers
-                      '(javascript-jshint)))
+                      '(javascript-jshint)
+                      '(javascript-jscs)))
 
 (add-hook 'after-init-hook (lambda '(flycheck-add-mode 'javascript-eslint 'web-mode)))
 
@@ -162,7 +173,9 @@ This function is called at the very end of Spacemacs initialization."
 (global-hl-line-mode -1)
 ;; Do not write anything in this section. This is where Emacs will
 ;; auto-generate custom variable definitions.
-
+(require 'eyedropper)
+(require 'hexrgb)
+(require 'facemenu+)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
