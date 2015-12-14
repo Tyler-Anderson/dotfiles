@@ -3,13 +3,9 @@ set shell=/bin/zsh
 set background=dark     " Assume a dark background
 filetype off                   " required!
 set history=1000                
-if has('vim_starting')
-//   set runtimepath+=~/.vim/bundle/neobundle.vim/
- endif
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
- call neobundle#rc(expand('~/.vim/bundle/'))
 
 :set rtp+=/usr/local/bin/ocamlmerlin/vim
 set number
@@ -17,6 +13,7 @@ set number
 Plugin 'gmarik/Vundle.vim'
 source ~/dotfiles/vim.bundles
 call vundle#end()            " required
+
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -34,6 +31,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
 
 autocmd BufRead,BufNewFile *.es6 setfiletype javascript
 
@@ -80,7 +80,6 @@ set guifont=Inconsolata-dz\ for\ Powerline:h12
         nnoremap <silent> <leader>gp :Git push<CR>
 
 :let $PATH .='PATH=/usr/local/bin:~/:~/.lein:/usr/local/Cellar/llvm/3.1/bin:/usr/local/Cellar/python/2.7.8_1/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:$HOME/bin'
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
 
 "au InsertLeave * hi Cursor guibg=red
 "au InsertEnter * hi Cursor guibg=white
