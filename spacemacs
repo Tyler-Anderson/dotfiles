@@ -152,8 +152,8 @@ This function is called at the very end of Spacemacs initialization."
 (autoload 'merlin-mode "merlin" "Merlin mode" t)
 (add-hook 'tuareg-mode-hook 'merlin-mode)
 (add-hook 'javascript-mode-hool 'auto-complete-mode)
-(push "~/venice" load-path)
-(push "~/venice/themes" load-path)
+(push "~/dotfiles/venice" load-path)
+(push "~/dotfiles/venice/themes" load-path)
 
  (require 'desert-theme)
 
