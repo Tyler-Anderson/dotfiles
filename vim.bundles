@@ -49,6 +49,8 @@ Plugin 'racer-rust/vim-racer'
 Plugin 'vim-scripts/repmo.vim'
 Plugin 'jamestomasino/actionscript-vim-bundle'
 Plugin 'fatih/vim-go'
+Plugin 'mxw/vim-jsx'
+
 " Plugin 'troydm/shellasync.vim'
 " Plugin 'zweifisch/pipe2eval'
 " Plugin 'jpalardy/vim-slime.git'
